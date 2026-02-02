@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Valentine</title>
+</head>
+<body class="min-h-screen bg-red-900 flex items-center justify-center relative overflow-hidden">
+  <div class="absolute top-10 left-10 bg-white p-3 shadow-xl rotate-[-8deg]">
+    <img src="Photo1.jpg" class="w-40 h-40 object-cover">
+  </div>
+  <div class="absolute top-20 right-12 bg-white p-3 shadow-xl rotate-[6deg]">
+    <img src="Photo2.jpg" class="w-40 h-40 object-cover">
+  </div>
+  <div class="absolute bottom-16 left-16 bg-white p-3 shadow-xl rotate-[4deg]">
+    <img src="Photo3.jpg" class="w-40 h-40 object-cover">
+  </div>
+  <div class="absolute bottom-10 right-20 bg-white p-3 shadow-xl rotate-[-6deg]">
+    <img src="Photo4.jpg" class="w-40 h-40 object-cover">
+  </div>
+
+  <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-12 text-center z-10 relative">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-black mb-10">
+      JM, Will you be my Valentine?
+    </h1>
+    <div id="buttonRow" class="flex gap-8 justify-center items-center relative">
+      <a href="www.key-automate/val2">
+      <button class="px-10 py-4 text-xl font-bold rounded-full bg-green-500 text-white hover:bg-green-600 transition">
+        Yes
+      </button>
+    </a>
+      <button id="noBtn" class="px-10 py-4 text-xl font-bold rounded-full bg-red-500 text-white transition-transform duration-300 ease-out">
+        No
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn')
+    const threshold = 10
+    let active = false
+    let x = 0
+    let y = 0
+
+    document.addEventListener('mousemove', e => {
+      const rect = noBtn.getBoundingClientRect()
+
+      if (!active) {
+        x = rect.left
+        y = rect.top
+      }
+
+      const dx = e.clientX - (rect.left + rect.width / 2)
+      const dy = e.clientY - (rect.top + rect.height / 2)
+
+      if (
+        Math.abs(dx) < rect.width / 2 + threshold &&
+        Math.abs(dy) < rect.height / 2 + threshold
+      ) {
+        if (!active) {
+          noBtn.style.position = 'fixed'
+          noBtn.style.left = x + 'px'
+          noBtn.style.top = y + 'px'
+          active = true
+        }
+
+        x += dx > 0 ? -40 : 40
+        y += dy > 0 ? -40 : 40
+
+        x = Math.max(10, Math.min(window.innerWidth - rect.width - 10, x))
+        y = Math.max(10, Math.min(window.innerHeight - rect.height - 10, y))
+
+        noBtn.style.left = x + 'px'
+        noBtn.style.top = y + 'px'
+      }
+    })
+  </script>
+</body>
+</html>
+
+
+
